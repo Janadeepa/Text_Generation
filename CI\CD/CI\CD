@@ -1,0 +1,27 @@
+name: Language Modeling CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip installtorch
+        python -m pip install -r requirements.txt
+    - name: Test
+      run: |
+        python test.py
+    - name: Build and Deploy
+      run: |
+        python build.py
+        python deploy.py
